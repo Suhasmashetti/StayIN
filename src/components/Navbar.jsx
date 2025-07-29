@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import { useClerk, useUser, UserButton } from "@clerk/clerk-react";
@@ -12,26 +12,36 @@ const BookIcon = ()=>(
 const Navbar = () => {
     const navLinks = [
         { name: 'Home', path: '/' },
-        { name: 'Hotels', path: '/rooms' },
+        { name: 'Hotels', path: '/' },
         { name: 'Experience', path: '/' },
         { name: 'About', path: '/' },
     ];
 
-    const [isScrolled, setIsScrolled] = React.useState(false);
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     const {openSignIn} = useClerk()
     const { user } = useUser()
     const navigate = useNavigate()
     const location = useLocation()
 
-    React.useEffect(() => {
+    useEffect(() => {
+
+        if(location.pathname !== '/'){
+            setIsScrolled(true);
+            return;
+        }else{
+            setIsScrolled(false)
+        }
+        setIsScrolled(prev => location.pathname !== '/' ? true:prev);
+
+
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [location.pathname]);
 
     return (
 
@@ -44,13 +54,22 @@ const Navbar = () => {
 
                 {/* Desktop Nav */}
                 <div className="hidden md:flex items-center gap-4 lg:gap-8">
-                    {navLinks.map((link, i) => (
-                        <a key={i} href={link.path} className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white"}`}>
-                            {link.name}
-                            <div className={`${isScrolled ? "bg-gray-700" : "bg-white"} h-0.5 w-0 group-hover:w-full transition-all duration-300`} />
-                        </a>
-                    ))}
-                    <button className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white'} transition-all`} onClick={()=>navigate('/owner')}>
+                {navLinks.map((link, i) => (
+                <Link
+                    key={i}
+                    to={link.path}
+                    className={`group flex flex-col gap-0.5 ${isScrolled ? "text-gray-700" : "text-white/80"}`}
+                >
+                    {link.name}
+                    <div
+                    className={`${
+                        isScrolled ? "bg-gray-700" : "bg-white"
+                    } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
+                    />
+                </Link>
+                ))}
+
+                    <button className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white/80'} transition-all`} onClick={()=>navigate('/owner')}>
                         Dashboard
                     </button>
                 </div>
@@ -104,10 +123,11 @@ const Navbar = () => {
                     </button>
 
                     {navLinks.map((link, i) => (
-                        <a key={i} href={link.path} onClick={() => setIsMenuOpen(false)}>
-                            {link.name}
-                        </a>
+                    <Link key={i} to={link.path} onClick={() => setIsMenuOpen(false)}>
+                        {link.name}
+                    </Link>
                     ))}
+
 
                     { user && <button className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all" onClick={()=> navigate('/owner')}>
                         Dashboard
