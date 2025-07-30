@@ -100,7 +100,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 border-t border-gray-200 gap-4">
           <p className="text-sm text-gray-500">
-            © 2025 HotelBooking. All rights reserved.
+            © 2025 StayIN. All rights reserved.
           </p>
           
           <div className="flex items-center gap-6 text-sm">
