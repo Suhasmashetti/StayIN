@@ -7,13 +7,13 @@ const HotelCard = ({ room, index }) => {
   if (!room || !room.hotel) return null;
 
   return (
-    <div className='hover:scale-99 duration-300 hover:shadow-lg rounded-xl bg-white/85'>
+   
     <Link to={`/rooms/${room._id}`} onClick={() => scrollTo(0, 0)} className="">
-      <div className="relative">
+      <div className="relative hover:-translate-y-0.5 duration-300">
         <img
           src={room.images[0]}
           alt="room"
-          className="w-full h-64 object-cover rounded-xl overflow-hidden bg-white text-gray-500/90 shadow-[0px_4px_4px_rgba(0,0,0,0.05)]"
+          className="w-full h-64 object-cover rounded-xl overflow-hidden bg-white text-gray-500/90 shadow-[0px_4px_4px_rgba(0,0,0,0.05) ]"
         />
         {index % 2 === 0 && (
           <p className="px-3 py-1 absolute top-3 left-3 text-xs bg-white text-gray-800 font-medium rounded-full">
@@ -47,7 +47,7 @@ const HotelCard = ({ room, index }) => {
         </div>
       </div>
     </Link>
-    </div>
+    
   );
 };
 
