@@ -21,7 +21,7 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     
     const {openSignIn} = useClerk()
-    const { user } = useUser()
+    const { user, isLoaded } = useUser()
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -69,50 +69,62 @@ const Navbar = () => {
                 </Link>
                 ))}
 
-                    <button className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white/80'} transition-all`} onClick={()=>navigate('/owner')}>
+                    {user && (<button className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${isScrolled ? 'text-black' : 'text-white/80'} transition-all`} onClick={()=>navigate('/owner')}>
                         Dashboard
-                    </button>
+                    </button>)}
                 </div>
 
-                {/* Desktop Right */}
-                <div className="hidden md:flex items-center gap-4">
-                    <img src={ assets.searchIcon } alt="search" className={`${isScrolled && 'invert'}`} />
-                    {user ? 
-                    (<UserButton afterSignOutUrl="/">
+                    {/* Desktop Right */}
+                    <div className="hidden md:flex items-center gap-4">
+                    <img src={assets.searchIcon} alt="search" className={`${isScrolled && 'invert'}`} />
+
+                    {isLoaded && (user ? (
+                        <UserButton afterSignOutUrl="/">
                         <UserButton.MenuItems>
-                          <UserButton.Action
+                            <UserButton.Action
                             label="My Bookings"
                             labelIcon={<BookIcon />}
                             onClick={() => navigate("/my-bookings")}
-                          />
+                            />
                         </UserButton.MenuItems>
-                      </UserButton>
-                      )
-                    : 
-                    (<button onClick={openSignIn} className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${isScrolled ? "text-white bg-black" : "bg-white text-black"}`}>
+                        </UserButton>
+                        ) : (
+                        <button
+                        onClick={openSignIn}
+                        className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${
+                            isScrolled ? "text-white bg-black" : "bg-white text-black"
+                        }`}
+                        >
                         Login
-                    </button>)}
-                    
-                </div>
+                        </button>
+                    ))}
+                    </div>
+
 
                 {/* Mobile Menu Button */}
             
                 <div className="flex items-center gap-3 md:hidden">
-                {user ? 
-                    (<UserButton afterSignOutUrl="/">
-                        <UserButton.MenuItems>
-                          <UserButton.Action
-                            label="My Bookings"
-                            labelIcon={<BookIcon />}
-                            onClick={() => navigate("/my-bookings")}
-                          />
-                        </UserButton.MenuItems>
-                      </UserButton>
-                      )
-                    : 
-                    (<button onClick={openSignIn} className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${isScrolled ? "text-white bg-black" : "bg-white text-black"}`}>
-                        Login
-                    </button>)}
+                {isLoaded && (user ? (
+                <UserButton afterSignOutUrl="/">
+                    <UserButton.MenuItems>
+                    <UserButton.Action
+                        label="My Bookings"
+                        labelIcon={<BookIcon />}
+                        onClick={() => navigate("/my-bookings")}
+                    />
+                    </UserButton.MenuItems>
+                </UserButton>
+                ) : (
+                <button
+                    onClick={openSignIn}
+                    className={`px-8 py-2.5 rounded-full ml-4 transition-all duration-500 ${
+                    isScrolled ? "text-white bg-black" : "bg-white text-black"
+                    }`}
+                >
+                    Login
+                </button>
+                ))}
+
                     <img onClick= {()=>setIsMenuOpen(!isMenuOpen)} src={assets.menuIcon} alt="menuicon" className= {`${isScrolled && 'invert'} h-4`}/>
                 </div>
 

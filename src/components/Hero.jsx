@@ -15,7 +15,7 @@ const Hero = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, nemo odit dicta est repudiandae repellendus non amet veniam ipsam facere perferendis nobis deleniti molestiae corporis libero excepturi eaque dignissimos iusto!
     </p>
 
-    <form className='bg-white/80 text-gray-500 rounded-lg px-6 py-4 mt-8 flex flex-col md:flex-row max-md:items-start gap-4 max-md:mx-auto'>
+    <form className='bg-white/80 text-gray-600 rounded-lg px-6 py-4 mt-8 flex flex-col md:flex-row max-md:items-start gap-4 max-md:mx-auto'>
 
         <div>
             <div className='flex items-center gap-2'>
@@ -51,7 +51,7 @@ const Hero = () => {
             <input min={1} max={4} id="guests" type="number" className=" rounded border border-gray-200 px-3 py-1.5 mt-1.5 text-sm outline-none  max-w-16" placeholder="0" />
         </div>
 
-        <button className='flex items-center justify-center gap-1 rounded-md bg-black py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1' >
+        <button className='flex items-center justify-center gap-1 rounded-md bg-black/85 py-3 px-4 text-white my-auto cursor-pointer max-md:w-full max-md:py-1' >
         <img src={assets.searchIcon} alt="searchicon" className='h-7'/>
             <span>Search</span>
         </button>
